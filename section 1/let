@@ -1,7 +1,7 @@
-# let
-//let을 이용해 company라는 변수명으로 a를 할당하여 선언한 후에 b로 재할당한 후 company라는 변수를 return하는 함수 solution을 완성하시오
+//# let
+//let을 이용해 company라는 변수명으로 a를 할당하여 선언한 후에 b로 재할당한 후 company라는 변수를 return하는 함수 solution을 완성하시오
 
-fuction solution(a,b) {
+function solution(a,b) {
     let company = a;
     company = b;
 

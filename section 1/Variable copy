@@ -1,0 +1,11 @@
+# const
+
+//추천메뉴 recommend가 매개변수로 주어질 때, 해당 추천 메뉴를 menu 상수에 선언 및 할당하여 return 하는 solution 함수 만들기
+
+function solution(recommend) {
+    const menu = recommend;
+    return menu;
+}
+
+
+
