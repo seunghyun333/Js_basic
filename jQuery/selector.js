@@ -1,6 +1,7 @@
 선택자란?
 jQuery wrapper 에는 CSS선택자가 위치할 수 있는데, 이를 통해 제어하려는 에리먼트를 빠르고 정확하게 지정할 수 있다.
 
+  
 /*
 #jquery : id 선택자
 .tutorial : class 선택자
