@@ -1,0 +1,84 @@
+AJAX
+Asynchronous Javascript And XML
+- 자바스크립트를 이용해 서버와 브라우저가 비동기 방식으로 데이터를 교환할 수 있는 통신 기능
+- 클라이언트와 서버간에 XML 데이터를 주고 받는 기술
+
+비동기 방식이란?
+- 웹페이지를 리로드하지 않고 데이터를 불러오는 방식
+- 웹페이지에서 기타 코드들을 요청할 경우, 웹페이지를 리로드하면서 불필요한 리소스가 낭비 되는데, 비동기 방식을 이용하면 필요한 데이터만 불러오면서 리소스 낭비를 줄일 수 있다.
+- AJAX는 XMLHttpRequest 객체를 통해 서버에 request한다.
+- JSON이나 XML형태로 필요한 데이터만 받아 갱신하기 때문에 그만큼의 자원과 시간을 아낄 수 있다.
+
+장점
+- 웹페이지 속도 향상
+- 서버의 처리가 완료될 때까지 기다리지 않고 처리 가능
+- 기존 웹에서 불가능했던 UI를 가능하게 해줌
+
+단점
+- 페이지 이동이 없는 통신으로 보안상의 문제가 있을 수 있음
+- 연속으로 데이터 요청시 서버 부하가 증가
+- 히스토리 관리가 안된다.
+- script로 작성되서 디버깅이 용이하지 않음 
+
+
+[문법]
+$.ajax({
+  type : 'post',                                            //타입(get,post,put 등등)
+  url : '/test',                                            // 요청할 서버url
+  async : true,                                              //비동기화 여부 (default: true)
+  headers : {                                                  //Http header
+    "Content-Type": "application/json",
+    "X-HTTP-Method-Override" : "POST"
+  },
+  dataType : 'text',            // 데이터 타입 (thml, xml, json, text 등등)
+  data : JSON.stringify({       // 보낼 데이터 (object, String, Array)
+      "no" : no,
+      "name" : name,
+      "nick" : nick
+  }),
+  success : function(result) {                    // 결과 성공 콜백 함수
+    console.log(result);
+  },
+  error : function(request, status, error) {      // 결과 에러 콜백 함수
+    console.log(error)
+  }
+})
+
+
+
+[예문]
+//   요청한 데이터 : {"member_list":[
+//    {"id":"aa1","pw":"bb","addr":"cc","tel":"dd"},
+//    {"id":"aa2","pw":"bb","addr":"cc","tel":"dd"},
+//    {"id":"aa3","pw":"bb","addr":"cc","tel":"dd"}
+//  ]}
+
+<script>
+$(document).ready(function(){
+      $("#listButton").click(getMemberList); //id="listButton"인 태그에 click하면 function getMemberList() 실행
+});
+function getMemberList(){
+    $.ajax({        
+        url:"list.jsp",                    //list.jsp에 AJAX요청        
+        success:function(data){            
+        let obj=JSON.parse(data);      //data를 받아와서 JSON형태로 변환            
+        let array=["<ol>"];             
+        obj["member_list"].forEach(                    
+                member =>  array.push("<li>"+member.id+"</li>")                        //JSON에 있는 member.id의 value를 li태그에 넣어서 array에 넣어줌            
+        );            
+        array.push("</ol>");                                              
+
+        $("#result").html(array.join(""));
+        //array의 요소들을 다 합쳐서 하나로 만든후 id="result"인 태그에 html로 출력        
+      }    
+    });    
+  }
+</script>
+<body>
+    <a href="#" id="listButton">회원리스트</a><br/>    
+    <div id="result">이곳에 회원 목록을 출력하세요</div>
+</body>
+
+
+
+//출처: https://scoring.tistory.com/entry/AJAX%EB%9E%80-JQuery%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-AJAX%EC%82%AC%EC%9A%A9%EB%B2%95
